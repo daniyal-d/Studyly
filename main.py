@@ -10,10 +10,8 @@ from io import StringIO
 import pandas as pd
 import genanki
 import io
-import easyocr
 from pdf2image import convert_from_bytes
 import numpy as np
-
 import pytesseract
 from pytesseract import Output, TesseractError
 
@@ -75,17 +73,6 @@ def convert_pdf_to_txt_file(path):
 def digital_text(notes):
     text_data_f = convert_pdf_to_txt_file(notes)
     return text_data_f
-
-def written_text(path):
-    new_images = convert_from_bytes(path)
-    all_text = ""
-    reader = easyocr.Reader(["en"])
-    for i in new_images:
-        new_images_array = np.array(i)
-        result = reader.readtext(new_images_array)
-        for (bbox, text, prob) in result:
-            all_text += (" " + text)
-    return all_text
 
 def get_df(flashcards):
     statements = flashcards.split("\n")
@@ -169,9 +156,7 @@ if uploaded_notes is not None:
             convert_button = st.button("Convert handwritten into flashcards", type="primary")
             if convert_button:
                 with st.spinner("Generating flashcards... (may take a minute)"):
-                    st.write(1)
                     all_text = get_txt(path)
-                    st.write(2)
                     flashcard_str = generate_flashcards(all_text)
                     flashcard_df = get_df(flashcard_str)
                     st.download_button(label = "Download flashcards as CSV",
