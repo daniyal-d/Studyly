@@ -7,4 +7,3 @@ genanki==0.13.1
 easyocr==1.7.1
 pdf2image==1.17.0
 numpy==1.26.4
-signal
