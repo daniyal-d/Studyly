@@ -139,10 +139,10 @@ st.set_page_config(page_title="Studyly | Study Smarter", layout="centered")
 
 # Main Page
 st.title("Studyly | Study Smarter With AI")
-st.subheader("Upload a PDF of your notes. AI will generate flashcards that can download these as apkg (to upload to Anki) or csv")
+st.subheader("Upload your notes, lecture slides, book chapters, and more! AI will generate flashcards that can download these as apkg (to upload to Anki) or csv")
 
 # File upload
-uploaded_notes = st.file_uploader("Upload Notes", type=["pdf"])
+uploaded_notes = st.file_uploader("Upload PDF", type=["pdf"])
 
 # When notes are uploaded
 if uploaded_notes is not None:
