@@ -16,21 +16,6 @@ import easyocr
 from pdf2image import convert_from_bytes
 import numpy as np
 
-from signal import signal, SIGPIPE, SIGPIPE
-def signal_handler(signal, frame):
-      # Perform cleanup tasks here
-      print("Ctrl+C pressed. Cleaning up and exiting...")
-
-      ack_sock.close()
-      perf_sock.close()
-      sys.exit(0)
-
-
-if __name__ == '__main__':
-   # Register the signal handler
-   signal.signal(signal.SIGINT, signal_handler)
-   signal.signal(signal.SIGPIPE, signal_handler)
-
 
 client = OpenAI(
     # This is the default and can be omitted
