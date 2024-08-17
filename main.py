@@ -16,6 +16,8 @@ import easyocr
 from pdf2image import convert_from_bytes
 import numpy as np
 
+from signal import signal, SIGPIPE, SIG_DFL
+signal(SIGPIPE,SIG_DFL)
 
 
 client = OpenAI(
