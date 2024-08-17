@@ -173,7 +173,7 @@ if uploaded_notes is not None:
             if convert_button:
                 with st.spinner("Generating flashcards... (may take a minute)"):
                     st.write(1)
-                    all_text = get_text(path)
+                    all_text = get_txt(path)
                     st.write(2)
                     flashcard_str = generate_flashcards(all_text)
                     flashcard_df = get_df(flashcard_str)
