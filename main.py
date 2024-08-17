@@ -28,7 +28,7 @@ client = OpenAI(
 
 # Testing
 def images_to_txt(path, language):
-    images = pdf2image.convert_from_bytes(path)
+    images = convert_from_bytes(path)
     all_text = []
     for i in images:
         pil_im = i
