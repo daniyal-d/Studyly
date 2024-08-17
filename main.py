@@ -17,6 +17,9 @@ from pdf2image import convert_from_bytes
 import numpy as np
 
 
+
+
+
 client = OpenAI(
     # This is the default and can be omitted
     api_key=os.environ.get("OPENAI_KEY"),
