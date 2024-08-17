@@ -16,7 +16,8 @@ import easyocr
 from pdf2image import convert_from_bytes
 import numpy as np
 
-
+import pytesseract
+from pytesseract import Output, TesseractError
 
 
 
