@@ -25,6 +25,26 @@ client = OpenAI(
     api_key=os.environ.get("OPENAI_KEY"),
 )
 
+
+# Testing
+def images_to_txt(path, language):
+    images = pdf2image.convert_from_bytes(path)
+    all_text = []
+    for i in images:
+        pil_im = i
+        text = pytesseract.image_to_string(pil_im, lang="eng")
+        all_text.append(text)
+    return all_text, len(all_text)
+
+def get_txt(path):
+    texts, nbPages = images_to_txt(path, "en")
+    totalPages = "Pages: "+str(nbPages)+" in total"
+    text_data_f = "\n\n".join(texts)
+    return text_data_f
+
+
+
+
 def see_notes(file):
   base64_pdf = base64.b64encode(file).decode('utf-8')
   pdf_display = f'<iframe src="data:application/pdf;base64,{base64_pdf}" width="700" height="1000" type="application/pdf"></iframe>'
@@ -152,7 +172,9 @@ if uploaded_notes is not None:
             convert_button = st.button("Convert handwritten into flashcards", type="primary")
             if convert_button:
                 with st.spinner("Generating flashcards... (may take a minute)"):
-                    all_text = written_text(path)
+                    st.write(1)
+                    all_text = get_text(path)
+                    st.write(2)
                     flashcard_str = generate_flashcards(all_text)
                     flashcard_df = get_df(flashcard_str)
                     st.download_button(label = "Download flashcards as CSV",
