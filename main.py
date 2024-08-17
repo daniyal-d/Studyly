@@ -1,5 +1,3 @@
-# TODO: Improve OCR speed and accuracy
-
 import streamlit as st
 from openai import OpenAI
 import os
@@ -32,14 +30,12 @@ def images_to_txt(path, language):
     images = convert_from_bytes(path)
     all_text = []
     for i in images:
-        pil_im = i
-        text = pytesseract.image_to_string(pil_im, lang="eng")
+        text = pytesseract.image_to_string(i, lang="eng")
         all_text.append(text)
-    return all_text, len(all_text)
+    return all_text
 
 def get_txt(path):
-    texts, nbPages = images_to_txt(path, "en")
-    totalPages = "Pages: "+str(nbPages)+" in total"
+    texts = images_to_txt(path, "en")
     text_data_f = "\n\n".join(texts)
     return text_data_f
 
