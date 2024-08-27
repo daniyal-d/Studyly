@@ -14,7 +14,7 @@ from pdf2image import convert_from_bytes
 import numpy as np
 import pytesseract
 from pytesseract import Output, TesseractError
-from PIL import image
+from PIL import Image
 
 
 
