@@ -38,7 +38,13 @@ def get_txt(path):
     return text_data_f
 
 
-
+def get_text_image(path):
+    all_text = []
+    for i in images:
+        text = pytesseract.image_to_string(i, lang="eng")
+        all_text.append(text)
+    text_data_f = "\n\n".join(texts)
+    return text_data_f
 
 def see_notes(file):
   base64_pdf = base64.b64encode(file).decode('utf-8')
@@ -155,7 +161,7 @@ if uploaded_notes is not None:
         convert_button = st.button("Convert notes into flashcards", type="primary")
         if convert_button:
             with st.spinner("Generating flashcards... (may take a minute)"):
-                all_text = get_txt(path)
+                all_text = get_text_image(path)
                 flashcard_str = generate_flashcards(all_text)
                 flashcard_df = get_df(flashcard_str)
                 st.download_button(label = "Download flashcards as CSV",
