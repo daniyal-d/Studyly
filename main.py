@@ -148,7 +148,7 @@ uploaded_notes = st.file_uploader("Upload PDF", type=["pdf", "png", "jpg", "jpeg
 # When notes are uploaded
 if uploaded_notes is not None:
     path = uploaded_notes.read()
-    file_extension = pdf_file.name.split(".")[-1]
+    file_extension = uploaded_notes.name.split(".")[-1]
     with st.expander("See uploaded notes"):
         see_notes(path)
     if file_extension != "pdf":
