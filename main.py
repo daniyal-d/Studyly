@@ -153,19 +153,19 @@ if uploaded_notes is not None:
         see_notes(path)
     if file_extension != "pdf":
         convert_button = st.button("Convert notes into flashcards", type="primary")
-            if convert_button:
-                with st.spinner("Generating flashcards... (may take a minute)"):
-                    all_text = get_txt(path)
-                    flashcard_str = generate_flashcards(all_text)
-                    flashcard_df = get_df(flashcard_str)
-                    st.download_button(label = "Download flashcards as CSV",
-                                        data = get_csv(flashcard_df),
-                                        file_name = "flashcards.csv",
-                                        mime = "text/csv")
-                    st.download_button(label = "Download flashcards as Anki Deck (APKG)",
-                                        data = create_anki_deck(flashcard_df, "Studyly Flashcards", "studyly_flashcards.apkg"),
-                                        file_name = "flashcards.apkg",
-                                        mime = "application/apkg")
+        if convert_button:
+            with st.spinner("Generating flashcards... (may take a minute)"):
+                all_text = get_txt(path)
+                flashcard_str = generate_flashcards(all_text)
+                flashcard_df = get_df(flashcard_str)
+                st.download_button(label = "Download flashcards as CSV",
+                                    data = get_csv(flashcard_df),
+                                    file_name = "flashcards.csv",
+                                    mime = "text/csv")
+                st.download_button(label = "Download flashcards as Anki Deck (APKG)",
+                                    data = create_anki_deck(flashcard_df, "Studyly Flashcards", "studyly_flashcards.apkg"),
+                                    file_name = "flashcards.apkg",
+                                    mime = "application/apkg")
     else:
         
         # Feed the notes into AI, have it generate CSV of flashcards, convert those to apkg
