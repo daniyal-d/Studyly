@@ -142,18 +142,17 @@ st.title("Studyly | Study Smarter With AI")
 st.subheader("Upload your notes, lecture slides, book chapters, and more! AI will generate flashcards that can download these as apkg (automatically creates an Anki deck) or csv")
 
 # File upload
-uploaded_notes = st.file_uploader("Upload PDF", type=["pdf"])
+# uploaded_notes = st.file_uploader("Upload PDF", type=["pdf"])
+uploaded_notes = st.file_uploader("Upload PDF", type=["pdf", "png", "jpg", "jpeg"])
 
 # When notes are uploaded
 if uploaded_notes is not None:
     path = uploaded_notes.read()
-    # Feed the notes into AI, have it generate CSV of flashcards, convert those to apkg
+    file_extension = pdf_file.name.split(".")[-1]
     with st.expander("See uploaded notes"):
         see_notes(path)
-    try:
-        ocr_box = st.checkbox("Enable OCR (do this if your notes are NOT typed)")
-        if ocr_box:
-            convert_button = st.button("Convert handwritten into flashcards", type="primary")
+    if file_extension != "pdf":
+        convert_button = st.button("Convert notes into flashcards", type="primary")
             if convert_button:
                 with st.spinner("Generating flashcards... (may take a minute)"):
                     all_text = get_txt(path)
@@ -167,30 +166,50 @@ if uploaded_notes is not None:
                                         data = create_anki_deck(flashcard_df, "Studyly Flashcards", "studyly_flashcards.apkg"),
                                         file_name = "flashcards.apkg",
                                         mime = "application/apkg")
-                # st.image(new_images)
-                #st.write(ocr_text(uploaded_notes.read()))
-                # image = Image.open(new_images)
+    else:
+        
+        # Feed the notes into AI, have it generate CSV of flashcards, convert those to apkg
+        try:
+            ocr_box = st.checkbox("Enable OCR (do this if your notes are NOT typed)")
+            if ocr_box:
+                convert_button = st.button("Convert handwritten into flashcards", type="primary")
+                if convert_button:
+                    with st.spinner("Generating flashcards... (may take a minute)"):
+                        all_text = get_txt(path)
+                        flashcard_str = generate_flashcards(all_text)
+                        flashcard_df = get_df(flashcard_str)
+                        st.download_button(label = "Download flashcards as CSV",
+                                            data = get_csv(flashcard_df),
+                                            file_name = "flashcards.csv",
+                                            mime = "text/csv")
+                        st.download_button(label = "Download flashcards as Anki Deck (APKG)",
+                                            data = create_anki_deck(flashcard_df, "Studyly Flashcards", "studyly_flashcards.apkg"),
+                                            file_name = "flashcards.apkg",
+                                            mime = "application/apkg")
+                    # st.image(new_images)
+                    #st.write(ocr_text(uploaded_notes.read()))
+                    # image = Image.open(new_images)
+                    
+                    # reader = easyocr.Reader(["en"])
+                    # new_images_array = np.array(new_images)
+                    # result = reader.readtext(new_images_array)
+                    # st.write(result)
                 
-                # reader = easyocr.Reader(["en"])
-                # new_images_array = np.array(new_images)
-                # result = reader.readtext(new_images_array)
-                # st.write(result)
-            
-        else:
-            convert_button = st.button("Convert typed into flashcards", type="primary")
-            if convert_button:
-                converted_text = digital_text(uploaded_notes)
-                with st.spinner("Generating flashcards... (may take a minute)"):
-                    flashcard_str = generate_flashcards(converted_text)    
-                    # st.write(flashcard_str)
-                    flashcard_df = get_df(flashcard_str)
-                    st.download_button(label = "Download flashcards as CSV",
-                                       data = get_csv(flashcard_df),
-                                       file_name = "flashcards.csv",
-                                       mime = "text/csv")
-                    st.download_button(label = "Download flashcards as Anki Deck (APKG)",
-                                       data = create_anki_deck(flashcard_df, "Studyly Flashcards", "studyly_flashcards.apkg"),
-                                       file_name = "flashcards.apkg",
-                                       mime = "application/apkg")
-    except Exception as e:
-        st.write(e)
+            else:
+                convert_button = st.button("Convert typed into flashcards", type="primary")
+                if convert_button:
+                    converted_text = digital_text(uploaded_notes)
+                    with st.spinner("Generating flashcards... (may take a minute)"):
+                        flashcard_str = generate_flashcards(converted_text)    
+                        # st.write(flashcard_str)
+                        flashcard_df = get_df(flashcard_str)
+                        st.download_button(label = "Download flashcards as CSV",
+                                           data = get_csv(flashcard_df),
+                                           file_name = "flashcards.csv",
+                                           mime = "text/csv")
+                        st.download_button(label = "Download flashcards as Anki Deck (APKG)",
+                                           data = create_anki_deck(flashcard_df, "Studyly Flashcards", "studyly_flashcards.apkg"),
+                                           file_name = "flashcards.apkg",
+                                           mime = "application/apkg")
+        except Exception as e:
+            st.write(e)
