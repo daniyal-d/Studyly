@@ -42,7 +42,7 @@ def get_txt(path):
 def get_text_image(path):
     all_text = []
     images = Image.open(path)
-    text = pytesseract.image_to_string(i, lang="eng")
+    text = pytesseract.image_to_string(images, lang="eng")
     return text
 
 def see_notes(file):
