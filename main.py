@@ -15,7 +15,7 @@ import numpy as np
 import pytesseract
 from pytesseract import Output, TesseractError
 from PIL import Image
-
+from streamlit_pdf_viewer import pdf_viewer
 
 
 client = OpenAI(
@@ -55,7 +55,7 @@ def see_notes(file):
     if type_file != "pdf":
         st.image(file)
     else:
-        pass
+        pdf_viewer(file)
 
 def generate_flashcards(text):
     response = client.chat.completions.create(
