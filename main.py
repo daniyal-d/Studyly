@@ -56,7 +56,8 @@ def see_notes(file, path):
         st.image(file)
     else:
         #base64_pdf = base64.b64encode(file).decode('utf-8')
-        pdf_viewer(path)
+        with open(path, "rb") as f:
+            pdf_viewer(path)
 
 def generate_flashcards(text):
     response = client.chat.completions.create(
