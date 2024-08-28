@@ -55,7 +55,8 @@ def see_notes(file):
     if type_file != "pdf":
         st.image(file)
     else:
-        pdf_viewer(file)
+        base64_pdf = base64.b64encode(file).decode('utf-8')
+        pdf_viewer(base64_pdf)
 
 def generate_flashcards(text):
     response = client.chat.completions.create(
