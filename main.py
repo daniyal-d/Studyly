@@ -45,10 +45,17 @@ def get_text_image(path):
     text = pytesseract.image_to_string(images, lang="eng")
     return text
 
+# def see_notes(file):
+#   base64_pdf = base64.b64encode(file).decode('utf-8')
+#   pdf_display = f'<iframe src="data:application/pdf;base64,{base64_pdf}" width="700" height="1000" type="application/pdf"></iframe>'
+#   st.markdown(pdf_display, unsafe_allow_html=True)
+
 def see_notes(file):
-  base64_pdf = base64.b64encode(file).decode('utf-8')
-  pdf_display = f'<iframe src="data:application/pdf;base64,{base64_pdf}" width="700" height="1000" type="application/pdf"></iframe>'
-  st.markdown(pdf_display, unsafe_allow_html=True)
+    type_file = file.name.split(".")[-1]
+    if type_file != "pdf":
+        st.image(file)
+    else:
+        pass
 
 def generate_flashcards(text):
     response = client.chat.completions.create(
@@ -155,7 +162,8 @@ if uploaded_notes is not None:
     path = uploaded_notes.read()
     type_file = uploaded_notes.name.split(".")[-1]
     with st.expander("See uploaded notes"):
-        see_notes(path)
+        # see_notes(path)
+        see_notes(uplooaded_notes)
     if type_file != "pdf":
         convert_button = st.button("Convert notes into flashcards", type="primary")
         if convert_button:
