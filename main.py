@@ -163,7 +163,7 @@ if uploaded_notes is not None:
     type_file = uploaded_notes.name.split(".")[-1]
     with st.expander("See uploaded notes"):
         # see_notes(path)
-        see_notes(uplooaded_notes)
+        see_notes(uploaded_notes)
     if type_file != "pdf":
         convert_button = st.button("Convert notes into flashcards", type="primary")
         if convert_button:
