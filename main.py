@@ -168,7 +168,7 @@ if uploaded_notes is not None:
         if type_file != "pdf":
             see_notes(uploaded_notes)
         else:
-            pdf_viewer(path)
+            pdf_viewer(uploaded_notes)
     if type_file != "pdf":
         convert_button = st.button("Convert notes into flashcards", type="primary")
         if convert_button:
