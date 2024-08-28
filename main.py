@@ -50,13 +50,13 @@ def get_text_image(path):
 #   pdf_display = f'<iframe src="data:application/pdf;base64,{base64_pdf}" width="700" height="1000" type="application/pdf"></iframe>'
 #   st.markdown(pdf_display, unsafe_allow_html=True)
 
-def see_notes(file):
+def see_notes(file, path):
     type_file = file.name.split(".")[-1]
     if type_file != "pdf":
         st.image(file)
     else:
         #base64_pdf = base64.b64encode(file).decode('utf-8')
-        pdf_viewer(file.read())
+        pdf_viewer(path)
 
 def generate_flashcards(text):
     response = client.chat.completions.create(
@@ -164,7 +164,7 @@ if uploaded_notes is not None:
     type_file = uploaded_notes.name.split(".")[-1]
     with st.expander("See uploaded notes"):
         # see_notes(path)
-        see_notes(uploaded_notes)
+        see_notes(uploaded_notes, path)
     if type_file != "pdf":
         convert_button = st.button("Convert notes into flashcards", type="primary")
         if convert_button:
