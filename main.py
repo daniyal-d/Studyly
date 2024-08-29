@@ -169,9 +169,7 @@ if uploaded_notes is not None:
             see_notes(uploaded_notes)
         else:
             # pdf_viewer(path)
-            with open(path, "rb") as f:
-                st.caption("Content scaling preview")
-                pdf_viewer(f.read(), height=250, width=300)
+            pdf_viewer(uplooaded_notes.getvalue())
     if type_file != "pdf":
         convert_button = st.button("Convert notes into flashcards", type="primary")
         if convert_button:
