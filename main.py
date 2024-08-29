@@ -161,15 +161,14 @@ uploaded_notes = st.file_uploader("Upload PDF", type=["pdf", "png", "jpg", "jpeg
 
 # When notes are uploaded
 if uploaded_notes:
-    with st.expander("See uploaded notes"):
-    # see_notes(path)
-    if uploaded_notes.name.split(".")[-1] != "pdf":
-        see_notes(uploaded_notes)
-    else:
-        # pdf_viewer(path)
-        pdf_viewer(uploaded_notes.getvalue())
-    path = uploaded_notes.read()
     type_file = uploaded_notes.name.split(".")[-1]
+    with st.expander("See uploaded notes"):
+        if type_file != "pdf":
+            see_notes(uploaded_notes)
+        else:
+            # pdf_viewer(path)
+            pdf_viewer(uploaded_notes.getvalue())
+    path = uploaded_notes.read()
     
     if type_file != "pdf":
         convert_button = st.button("Convert notes into flashcards", type="primary")
